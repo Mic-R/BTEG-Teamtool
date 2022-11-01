@@ -1,0 +1,20 @@
+{
+  "name": "bte-teamtool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@prisma/client": "^4.5.0",
+    "discord.js": "latest",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "prisma": "^4.5.0",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
