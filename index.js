@@ -16,17 +16,17 @@ client.on("ready", () => {
   schedule(client);
 });
 
+//command handling
 client.commands = new Discord.Collection();
 const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs
   .readdirSync(commandsPath)
   .filter((file) => file.endsWith(".js"));
-
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
-  // Set a new item in the Collection with the key as the commands name and the value as the exported module
   if ("data" in command && "execute" in command) {
+    console.log("Registering /" + command.data.name)
     client.commands.set(command.data.name, command);
   } else {
     console.warn(
@@ -35,20 +35,54 @@ for (const file of commandFiles) {
   }
 }
 
-client.on(Discord.Events.InteractionCreate, async (interaction) => {
-  const command = interaction.client.commands.get(interaction.commandName);
-  if (!command) {
-    console.error(`No command matching ${interaction.commandName} was found.`);
-    return;
+//buttons handling
+client.buttons = new Discord.Collection();
+const buttonFolders = fs.readdirSync('./buttons');
+for (const folder of buttonFolders) {
+  const buttonFiles = fs.readdirSync(`./buttons/${folder}`).filter(file => file.endsWith('.js'));
+  for (const file of buttonFiles) {
+    const button = require(`./buttons/${folder}/${file}`);
+    if("data" in button && "execute" in button) {
+      client.buttons.set(button.data.name, button);
+    }else{
+      console.warn(
+          `The command at ${`./buttons/${folder}/${file}`} is missing a required "data" or "execute" property.`
+      );
+    }
   }
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    await interaction.reply({
-      content: "There was an error while executing this command!",
-      ephemeral: true,
-    });
+}
+
+
+client.on(Discord.Events.InteractionCreate, async (interaction) => {
+  if(interaction.isCommand()) {
+    const command = interaction.client.commands.get(interaction.commandName);
+    if (!command) {
+      console.error(`No command matching ${interaction.commandName} was found.`);
+      return;
+    }
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({
+        content: "There was an error while executing this command!",
+        ephemeral: true,
+      });
+    }
+  }
+  if(interaction.isButton()) {
+    const button = client.buttons.get(interaction.customId);
+    if(!button) {
+      console.error(`No command matching ${interaction.commandName} was found.`);
+      return;
+    }
+
+    try {
+      await button.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({ content: 'There was an error while executing this buttons!', ephemeral: true});
+    }
   }
 });
 

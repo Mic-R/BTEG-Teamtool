@@ -5,7 +5,7 @@ module.exports = async function (client) {
     let date = Date.now();
     let data = await prisma.reminder.findMany();
     data.forEach((reminder) => {
-        if (reminder.time < date) {
+        if (reminder.time < date && reminder.pending) {
             try {
                 let channel = client.channels.cache.get(reminder.channel);
                 channel.send({
@@ -14,7 +14,7 @@ module.exports = async function (client) {
                         {
                             title: "⏰ | Hey! You've got a pending reminder",
                             description: "Here is what you wanted to do:",
-                            color: null,
+                            color: 3553599,
                             fields: [
                                 {
                                     name: "Message:",
@@ -30,18 +30,24 @@ module.exports = async function (client) {
                     attachments: [],
                 });
                 prisma.reminder
-                    .delete({
+                    .update({
                         where: {
                             id: reminder.id,
                         },
+                        data: {
+                            pending: false
+                        }
                     })
                     .then(() => console.debug("Deleted reminder: " + reminder.id));
             } catch (e) {
                 prisma.reminder
-                    .delete({
+                    .update({
                         where: {
                             id: reminder.id,
                         },
+                        data: {
+                            pending: false
+                        }
                     })
                     .then(() => console.debug("Deleted reminder: " + reminder.id))
                     .catch((e) => console.error(e));
