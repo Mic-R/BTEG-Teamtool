@@ -15,6 +15,8 @@ client.on("ready", () => {
   console.info("Ready! Logged in as " + client.user.username);
   schedule(client);
 
+  client.application.commands.set([]);
+
   //command handling
   client.commands = new Discord.Collection();
   const commandsPath = path.join(__dirname, "commands");

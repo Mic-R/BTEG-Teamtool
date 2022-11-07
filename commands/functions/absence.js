@@ -13,23 +13,46 @@ module.exports = async function (interaction) {
           type: 1,
           components: [
             {
-              style: 3,
-              label: `Change status`,
-              custom_id: `AbsenceSetStatus`,
-              disabled: false,
-              type: 2,
-            },
-            {
-              style: 1,
-              label: `Register`,
-              custom_id: `AbsenceRegister`,
+              style: 2,
+              emoji: {
+                id: `1009396982399373348`,
+                name: `onlinestatus`,
+                animated: false,
+              },
+              custom_id: `AbsenceSetAvailable`,
               disabled: false,
               type: 2,
             },
             {
               style: 2,
-              label: `Add role`,
-              custom_id: `AbsenceAddRole`,
+              emoji: {
+                id: `1009396978683219979`,
+                name: `idlestatus`,
+                animated: false,
+              },
+              custom_id: `AbsenceSetIdle`,
+              disabled: false,
+              type: 2,
+            },
+            {
+              style: 2,
+              emoji: {
+                id: `1009396980704874528`,
+                name: `dndstatus`,
+                animated: false,
+              },
+              custom_id: `AbsenceSetDND`,
+              disabled: false,
+              type: 2,
+            },
+            {
+              style: 2,
+              emoji: {
+                id: `1009140759523495936`,
+                name: `offline`,
+                animated: false,
+              },
+              custom_id: `AbsenceSetOffline`,
               disabled: false,
               type: 2,
             },
@@ -54,7 +77,7 @@ module.exports = async function (interaction) {
         .create({
           data: {
             id: r.id,
-            channel: r.channel.id
+            channel: r.channel.id,
           },
         })
         .then(() => {
