@@ -16,21 +16,23 @@ model reminder {
     user    String
     channel String
     message String
-    pending Boolean
 }
 
 model absenceUser {
     id      String @id @map("_id")
     status  Int
     until   Int?
+    roleID  String
 }
 
 model absencePanel {
     id      String @id @map("_id")
+    channel String
 }
 
 model absenceRole {
     id      String @id @map("_id")
-    emote   String?
+    emote   String
+    guild   String
 }
 

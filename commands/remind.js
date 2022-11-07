@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const execute = require("./functions/remind")
-
+const execute = require("./functions/remind");
 
 module.exports = {
   data: new SlashCommandBuilder()
