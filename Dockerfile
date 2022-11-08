@@ -12,6 +12,8 @@ RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 
+RUN prisma generate
+
 # Bundle app source
 COPY . .
 
