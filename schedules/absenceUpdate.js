@@ -35,16 +35,28 @@ module.exports = async function (client) {
         if(!data[role.id]){
             console.warn(`Nobody has the role ${role.id} mofo`);
         }else{
-            data[role.id] = data[role.id].join("\n");
+            data[role.id] = {
+                string: data[role.id].join("\n"),
+                length: data[role.id].length
+            }
         }
         let rolename = client.guilds.cache.get(role.guild).roles.cache.get(role.id).name;
         fields.push({
-            "name": `${role.emote} ${rolename}`,
-            "value": data[role.id],
+            "name": `${role.emote} ${rolename} \`${users.filter(item => item.status === 0 && item.roleID === role.id).length.toString()}/${data[role.id].length}\``,
+            "value": data[role.id].string,
             "inline": true
         });
     });
     let panels = await prisma.absencePanel.findMany();
+    fields.push(
+        {
+            "name": "__Status__",
+            "value": `${emotes.online} Aktiv \`${users.filter(item => item.status === 0).length.toString()}/${users.length}\`\n
+            ${emotes.idle} Auf Abruf/Ping verfügbar \`${users.filter(item => item.status === 1).length.toString()}/${users.length}\`\n
+            ${emotes.dnd} Eingeschränkt verfügbar \`${users.filter(item => item.status === 2).length.toString()}/${users.length}\`\n
+            ${emotes.offline} Zurzeit nicht verfügbar \`${users.filter(item => item.status === 3).length.toString()}/${users.length}\``
+        }
+    )
     panels.forEach((panel) => {
         client.channels.cache.get(panel.channel).messages.fetch(panel.id).then((msg) => {
             let content = {
