@@ -3,7 +3,6 @@ const prisma = new PrismaClient();
 
 module.exports = async function (interaction) {
   const time = Date.parse(`${interaction.options.get("time").value}:00 UTC+1`);
-  console.log(interaction.options.mention);
   const user = interaction.options.mention
     ? interaction.options.mention.id
     : interaction.user.id;

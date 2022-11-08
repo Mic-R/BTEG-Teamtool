@@ -21,7 +21,7 @@ model reminder {
 model absenceUser {
     id      String @id @map("_id")
     status  Int
-    until   Int?
+    until   String?
     roleID  String
 }
 

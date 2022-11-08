@@ -25,7 +25,7 @@ module.exports = async function (interaction) {
       .create({
         data: {
           id: interaction.options.get("user").user.id,
-          status: 1,
+          status: 0,
           roleID: interaction.options.get("role").role.id,
         },
       })

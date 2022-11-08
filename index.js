@@ -15,10 +15,8 @@ client.on("ready", () => {
   console.info("Ready! Logged in as " + client.user.username);
   schedule(client);
 
-  client.application.commands.set([]);
-
   //command handling
-  client.commands = new Discord.Collection();
+   client.commands = new Discord.Collection();
   const commandsPath = path.join(__dirname, "commands");
   const commandFiles = fs
     .readdirSync(commandsPath)
@@ -30,7 +28,8 @@ client.on("ready", () => {
       client.commands.set(command.data.name, command);
       client.application.commands
         .create(command.data.toJSON())
-        .then(() => console.log("Registered /" + command.data.name));
+        .then(() => console.log("Registered /" + command.data.name))
+          .catch((e) => console.warn(e.message))
     } else {
       console.warn(
         `The command at ${filePath} is missing a required "data" or "execute" property.`
@@ -46,7 +45,7 @@ client.on("ready", () => {
   for (const file of buttonFiles) {
     const button = require(`./buttons/${file}`);
     if ("data" in button && "execute" in button) {
-      client.buttons.set(button.data.data.custom_id, button);
+      client.buttons.set(button.data.name, button);
     } else {
       console.warn(
         `The command at ${`./buttons/${file}`} is missing a required "data" or "execute" property.`
