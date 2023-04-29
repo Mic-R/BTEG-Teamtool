@@ -83,7 +83,7 @@ module.exports = async function (client) {
                 {
                   title: "Team Anwesenheit",
                   color: 16777215,
-                  filds: fields,
+                  fields: fields,
                 },
               ],
               attachments: [],
