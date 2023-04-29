@@ -3,7 +3,6 @@ const prisma = new PrismaClient();
 const emotes = require("../emotes.json");
 
 module.exports = async function (client) {
-  try {
     let data = {};
     let users = await prisma.absenceUser.findMany();
     users.forEach((user) => {
@@ -102,7 +101,4 @@ module.exports = async function (client) {
         });
       }
     });
-  } catch (e) {e
-    console.log(e);
-  }
 };

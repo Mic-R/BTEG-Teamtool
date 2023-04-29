@@ -7,5 +7,5 @@ module.exports = function (client) {
     await reminder(client);
     await absenceStatusUpdate();
     await absenceUpdate(client);
-  }, 30000);
+  }, 15000);
 };
