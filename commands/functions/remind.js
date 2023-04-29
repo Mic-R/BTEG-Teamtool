@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports = async function (interaction) {
-  const time = Date.parse(`${interaction.options.get("time").value}:00 UTC+1`);
+  const time = Date.parse(`${interaction.options.get("time").value.replace(" ", "T")}:00`);
   const user = interaction.options.mention
     ? interaction.options.mention.id
     : interaction.user.id;
@@ -16,7 +16,7 @@ module.exports = async function (interaction) {
   //time error message
   if (!time) {
     await interaction.reply({
-      content: 3553599,
+      content: " ",
       embeds: [
         {
           title:

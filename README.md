@@ -4,7 +4,6 @@ A very great, unique, feature rich bot with never before seen features like:
 
 - Reminders
 
-
 Start this bot with the following steps:
 
 - Install Node.js on a server

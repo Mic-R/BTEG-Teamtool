@@ -1,10 +1,10 @@
-const changeStatus = require("./functions/changeStatus")
+const changeStatus = require("./functions/changeStatus");
 
 module.exports = {
-    data: {
-        name: "AbsenceSetAvailable"
-    },
-    async execute(interaction){
-        changeStatus(interaction, 0);
-    }
-}
+  data: {
+    name: "AbsenceSetAvailable",
+  },
+  async execute(interaction) {
+    changeStatus(interaction, 0);
+  },
+};

@@ -16,7 +16,7 @@ client.on("ready", () => {
   schedule(client);
 
   //command handling
-   client.commands = new Discord.Collection();
+  client.commands = new Discord.Collection();
   const commandsPath = path.join(__dirname, "commands");
   const commandFiles = fs
     .readdirSync(commandsPath)
@@ -29,7 +29,7 @@ client.on("ready", () => {
       client.application.commands
         .create(command.data.toJSON())
         .then(() => console.log("Registered /" + command.data.name))
-          .catch((e) => console.warn(e.message))
+        .catch((e) => console.warn(e.message));
     } else {
       console.warn(
         `The command at ${filePath} is missing a required "data" or "execute" property.`

@@ -1,10 +1,10 @@
-const modal = require("../modals/AbsenceSetDND")
+const modal = require("../modals/AbsenceSetDND");
 
 module.exports = {
-    data: {
-        name: "AbsenceSetDND"
-    },
-    async execute(interaction){
-        await interaction.showModal(modal.data)
-    }
-}
+  data: {
+    name: "AbsenceSetDND",
+  },
+  async execute(interaction) {
+    await interaction.showModal(modal.data);
+  },
+};

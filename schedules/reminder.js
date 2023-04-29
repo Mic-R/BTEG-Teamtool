@@ -6,6 +6,7 @@ module.exports = async function (client) {
   let data = await prisma.reminder.findMany();
   data.forEach((reminder) => {
     if (reminder.time < date) {
+      console.log("exec 2");
       try {
         let channel = client.channels.cache.get(reminder.channel);
         channel.send({
