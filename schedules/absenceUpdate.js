@@ -73,7 +73,6 @@ module.exports = async function (client) {
         .length.toString()}/${users.length}\``,
     });
     panels.forEach((panel) => {
-      try {
         client.channels.cache
           .get(panel.channel)
           .messages.fetch(panel.id)
@@ -90,15 +89,16 @@ module.exports = async function (client) {
               attachments: [],
             };
             msg.edit(content);
-          });
-      } catch (e) {
-        console.log(e);
-        prisma.absencePanel.delete({
-          where: {
-            id: panel.id.toString(),
-            channel: panel.channel.toString(),
-          },
-        });
-      }
+          }).catch(
+            (e) => {
+                console.log(e);
+                prisma.absencePanel.delete({
+                    where: {
+                    id: panel.id.toString(),
+                    channel: panel.channel.toString(),
+                    },
+                });
+            }
+        );
     });
 };
